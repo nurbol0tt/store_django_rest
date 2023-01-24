@@ -33,11 +33,10 @@ SECRET_KEY = 'django-insecure-96e9!42jq0n@k+24x01tez$c(enf-+)kny_f*&6rj8ro@(r6)_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -93,12 +92,12 @@ WSGI_APPLICATION = 'store.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'store',
-        'USER': 'postgres',
-        'PASSWORD': 'nurrulit',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        'NAME': os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        'USER': os.environ.get("SQL_USER", "user"),
+        'PASSWORD': os.environ.get("SQL_PASSWORD", "password"),
+        'HOST': os.environ.get("SQL_HOST", "locahost"),
+        'PORT': os.environ.get("SQL_PORT", "5432")
     }
 }
 
