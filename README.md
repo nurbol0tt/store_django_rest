@@ -9,11 +9,11 @@ ___
 3. Step 3 go to the directory and enter the following command in the terminal
 
 ```
-docker-compose docker-compose build
+sudo docker-compose build
 ```
 ___
 4. Now, after creating the image, we just need to run our containers
 
 ```
-docker-compose docker-compose.base up
+sudo docker-compose.base up
 ```
