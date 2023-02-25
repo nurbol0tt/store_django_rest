@@ -15,5 +15,5 @@ ___
 4. Now, after creating the image, we just need to run our containers
 
 ```
-sudo docker-compose.base up
+sudo docker-compose up
 ```
