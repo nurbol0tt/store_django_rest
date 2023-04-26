@@ -15,7 +15,8 @@ class UserManager(BaseUserManager):
             raise ValueError('you have not entered email')
         user = self.model(
             email=self.normalize_email(email),
-            username=username, **extra
+            username=username,
+            **extra
         )
         user.set_password(raw_password=password)
         user.save(using=self.db)
@@ -28,16 +29,39 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=150, unique=True, blank=True)
-    email = models.EmailField(blank=True, unique=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
-    is_verified = models.BooleanField(default=False)
-    avatar = models.ImageField(upload_to='users/avatar', blank=True, null=True)
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        blank=True
+    )
+    email = models.EmailField(
+        blank=True,
+        unique=True
+    )
+    created_date = models.DateTimeField(
+        auto_now_add=True
+    )
+    updated_date = models.DateTimeField(
+        auto_now=True
+    )
+    is_active = models.BooleanField(
+        default=True
+    )
+    is_verified = models.BooleanField(
+        default=False
+    )
+    avatar = models.ImageField(
+        upload_to='users/avatar',
+        blank=True,
+        null=True,
+    )
 
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(
+        default=False,
+    )
+    is_superuser = models.BooleanField(
+        default=False,
+    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -49,11 +73,21 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class UserRating(models.Model):
-    ip = models.CharField("IP address", max_length=15)
-    star = models.ForeignKey('product.RatingStar',
-                             on_delete=models.CASCADE, verbose_name="star")
-    username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="username",
-                                 related_name="ratings")
+    ip = models.CharField(
+        "IP address",
+        max_length=15
+    )
+    star = models.ForeignKey(
+        'product.RatingStar',
+        on_delete=models.CASCADE,
+        verbose_name="star"
+    )
+    username = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="username",
+        related_name="ratings"
+    )
 
     def __str__(self):
         return f"{self.star} - {self.username}"
