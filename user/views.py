@@ -25,8 +25,7 @@ from user.serializers import RegisterSerializer, UserSerializer, CreateRatingUse
 
 
 class RegisterView(APIView):
-
-    serializers = RegisterSerializer
+    serializer_class = RegisterSerializer
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -75,12 +74,21 @@ class EmailVerify(APIView):
                 user.is_verified = True
                 user.save()
 
-            return Response({"email": "Successfully activated "}, status=status.HTTP_200_OK)
+            return Response(
+                {"email": "Successfully activated "},
+                status=status.HTTP_200_OK
+            )
 
         except jwt.ExpiredSignatureError as _ex:
-            return Response({"error": "Activation Expired"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Activation Expired"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         except jwt.exceptions.DecodeError as _ex:
-            return Response({"error": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Invalid Token"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class UserListView(APIView):
@@ -106,8 +114,9 @@ class UpdatePassword(APIView):
 
         if serializer.is_valid():
             if not user.check_password(serializer.data.get('old_password')):
-                return Response({'old_password': ['Wrong password.']},
-                                status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {'old_password': ['Wrong password.']},
+                    status=status.HTTP_400_BAD_REQUEST)
             # set_password also hashes the password that the user will get
             user.set_password(serializer.data.get('new_password'))
             user.save()
