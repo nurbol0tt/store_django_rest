@@ -35,5 +35,4 @@ urlpatterns = [
     path('like/<int:pk>/', views.LikeView.as_view()),
     path('search/', views.SearchView.as_view()),
     path('filter/', views.FilterDataView.as_view()),
-
 ]

@@ -7,7 +7,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_PASSWORD=nurrulit
+      - POSTGRES_PASSWORD=nur_2308
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
   django:
@@ -20,7 +20,7 @@ services:
     volumes:
       - .:/usr/src/store
     ports:
-      - 8000:8000
+      - "8080:8000"
     depends_on:
       - db
 
